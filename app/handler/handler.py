@@ -1,7 +1,6 @@
 import time
 
 from fastapi import FastAPI, Form
-
 from writer import Writer
 
 app = FastAPI()

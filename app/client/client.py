@@ -3,9 +3,12 @@ import random
 import time
 
 import aiohttp
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
 
 async def make_requests(t_id: int, get_id, d_r: int, val_by_cnt: int):
@@ -24,33 +27,32 @@ async def make_requests(t_id: int, get_id, d_r: int, val_by_cnt: int):
             print(log_msg)
 
 
-@app.get('/')
-async def get_client():
-    return 'client'
+@app.get("/", response_class=HTMLResponse)
+async def client_get(request: Request):
+    return templates.TemplateResponse('index.html', {'request': request})
 
 
 @app.post('/request')
-async def client(request: Request):
+async def client(connection_count: int = Form(...),
+                 connection_value: int = Form(...),
+                 delay_range: int = Form(...)):
     """Стартовая функция сервиса, подготавливает данные и вызывает tasks()."""
-    connection_count = request.headers.get('connection_count')
-    connection_value = request.headers.get('connection_value')
-    delay_range = request.headers.get('delay_range')
     try:
-        d_r = int(delay_range)
-        c_cnt = int(connection_count)
-        c_val = int(connection_value)
-        val_by_cnt = int(c_val / c_cnt)
-        get_id = id_generator(c_val)
-        return await tasks(c_cnt, get_id, d_r, val_by_cnt)
+        val_by_cnt = int(connection_value / connection_count)
+        get_id = id_generator(connection_value)
+        return await tasks(connection_count, get_id, delay_range, val_by_cnt)
     except Exception:
         return 'Возникло исключение, проверьте введённые данные.'
 
 
-async def tasks(c_cnt, get_id, d_r, val_by_cnt):
+async def tasks(c_cnt: int,
+                get_id,
+                d_r: int,
+                val_by_cnt: int):
     """Функция стартующая asyncio."""
     tasks = [make_requests(i, get_id, d_r, val_by_cnt) for i in range(c_cnt)]
     await asyncio.gather(*tasks)
-    return "Complete!"
+    return 'Complete!'
 
 
 def id_generator(c_val: int):
