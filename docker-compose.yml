@@ -1,0 +1,14 @@
+version: "3"
+services:
+  client:
+    build: app/client/
+    ports:
+      - 8003:8003
+  handler:
+    build: app/handler/
+    ports:
+      - 8002:8002
+  receiver:
+    build: app/receiver/
+    ports:
+      - 8001:8001
