@@ -31,3 +31,8 @@ docker compose up
 Для запуска программы перейдите на страницу клиента программы (http://127.0.0.1:8003), введите свои параметры и нажмите кнопку старт, или выполните POST запрос на http://127.0.0.1:8003/request через Postman, передав при этом в **Body/form-data** ключи **connection_count**, **connection_value**, **delay_range**.
 ### Результаты выполнения.
 Логи, пишушиеся в процессе работы программы, вы можете посмотреть в контейнерах client и receiver, файлы .txt (first.txt, second.txt) вы можете найти в контейнере handler в папке handler.
+## Стек.
+- [Python](https://www.python.org/);
+- [FastAPI](https://fastapi.tiangolo.com/);
+- [Asyncio](https://docs.python.org/3/library/asyncio.html);
+- [Aiogram](https://aiogram.dev);
