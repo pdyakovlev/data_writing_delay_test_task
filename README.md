@@ -6,18 +6,6 @@
 ```
 git clone git@github.com:pdyakovlev/data_writing_delay_test_task.git
 ```
-### Создайте виртуальное окружение в корне:
-```
-python -m venv venv
-```
-### Активируйте виртуальное окружение:
-```
-. venv/Scripts/activate
-```
-### Установите зависимости:
-```
-pip install -r requirements.txt
-```
 ### Соберите и запустите контейнеры:
 ```
 docker compose build
