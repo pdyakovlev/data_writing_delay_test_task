@@ -23,4 +23,3 @@ docker compose up
 - [Python](https://www.python.org/);
 - [FastAPI](https://fastapi.tiangolo.com/);
 - [Asyncio](https://docs.python.org/3/library/asyncio.html);
-- [Aiogram](https://aiogram.dev);
